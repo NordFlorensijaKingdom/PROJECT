@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tests</title>
+    <link rel="stylesheet" href="t1.css">
+</head>
+<head>
+    <title>!</title>
+    <style type="text/css">
+        #tbl {
+            text-align: center;
+            color: black;
+        }
+ 
+        #forma {
+            width: 95%;
+            background: antiquewhite;
+        }
+        body{
+            background-color: antiquewhite;
+        }
+        #forma textarea {
+            border-radius: 30px;
+            padding-left:7% ;
+            font-weight: 900;
+            font-size: 20px;
+            margin-left: 25%;
+            width: 50%;
+            min-height: 100px;
+            max-height: 100px;
+            background: rgb(16, 76, 16);
+            color: white;
+        }
+ 
+        #forma button {
+            margin-left: 10%;
+            width: 10%;
+            font-weight: 700;
+            font-size: 30px;
+            background:  rgb(155, 231, 136);
+            color: rgb(0, 0, 0);
+            border-radius: 10px;
+        }
+ 
+        .error {
+            color: red;
+        }
+ 
+        .right {
+            color: green;
+        }
+        h1{
+            margin-left: 10%;
+            margin-top: 5%;
+        }
+    </style>
+</head>
+<body>
+    <div class="head">
+        <a href="2.html"><img src="logo.png" alt="" height="100px"></a>
+        <h1 style="color: white; font-size: 100px;position: absolute; padding-left: 150px; margin-top: -120px;">PC4Dinos</h1>
+    </div>
+    <form id="forma">
+        <h1>Вопрос:</h1>
+        <textarea disabled="disabled" name="question" data-id="0"></textarea>
+        <br>
+        <h1> Ваш ответ:</h1> 
+        <textarea name="answer"></textarea>
+        
+        <br>
+        <button name="btn">Дальше</button>
+    </form>
+    <script type="text/javascript">
+        "use strict";
+ 
+        let data = [
+            [" За какое действие отвечает сочетание клавиш ctrl+а?", "Выделить все"],
+            [" За какое действие отвечает сочетание клавиш ctrl+r?", "Вызов командной строки"],
+            [" За какое действие отвечает сочетание клавиш ctrl+shift+esc?", "Вызов диспетчера задач"],
+            
+        ];
+ 
+        let headers = ["Вопросы", "Правильные ответы", "Ваши ответы"];
+        let answers = [];
+        let rightAnswers = null;
+ 
+        let form = document.getElementById("forma");
+        let question = form.question;
+        let answer = form.answer;
+        let btn = form.btn;
+ 
+        question.value = data[question.dataset.id++][0];
+ 
+        btn.addEventListener("click", (e) => {
+            e.preventDefault();
+            if (answer.value === "") return false;
+            answers.push(answer.value);
+            answer.value = "";
+            if(+question.dataset.id === data.length) {
+                form.style.display = "none";
+                rightAnswers = answers.map((el, i) => el === data[i][1] ? i : undefined).filter(el => el !== undefined);
+                document.body.append(show(data, headers, answers, rightAnswers));
+                return false;
+            }
+            question.value = data[question.dataset.id++][0];
+            answer.focus();
+        });
+ 
+        function show(data, headers, answers, rightAnswers) {
+            let table = document.createElement("table");
+            table.setAttribute("id", "tbl");
+ 
+            let tr = document.createElement("tr");
+            for (let i = 0; i < headers.length; i++) {
+                let td = document.createElement("th");
+                td.innerHTML = headers[i];
+                tr.append(td);
+            }
+ 
+            table.append(tr);
+ 
+            for (let i = 0; i < data.length; i++) {
+                let tr = document.createElement("tr");
+                for (let j = 0; j < data[i].length + 1; j++) {
+                    let td = document.createElement("td");
+                    if (j === headers.length-1) { 
+                        if(rightAnswers.includes(i)) td.classList.add("right");
+                        else td.classList.add("error");
+                        td.innerHTML = answers[i];
+                    } else {
+                        td.innerHTML = data[i][j];    
+                    }
+                    tr.append(td);
+                }
+                table.append(tr);
+            }
+            return table;
+        }
+    </script>
+</body>
+</html>

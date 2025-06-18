@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>typing</title>
+    <link rel="stylesheet" href="2.css">
+</head>
+<body>
+    <div class="head">
+       <img src="logo.png" alt="" height="100px">
+        <h1 style="color: white; font-size: 100px;position: absolute; padding-left: 150px; margin-top: -120px;">PC4Dinos</h1>
+  
+
+    
+    <div class="timerblock">
+        <h1 id="timer" style="margin-left: 20px;">00:00:00</h1>
+        <button id="startBtn" style="background-color: rgb(16, 76, 16);color: white;">Старт</button>
+        <button id="pauseBtn" disabled style="background-color: rgb(16, 76, 16);color: white;">Пауза</button>
+        <button id="resetBtn" disabled style="background-color: rgb(16, 76, 16);color: white;">Сброс</button>
+        <script>
+            let timer = document.getElementById('timer');
+let startBtn = document.getElementById('startBtn');
+let pauseBtn = document.getElementById('pauseBtn');
+let resetBtn = document.getElementById('resetBtn');
+
+let seconds = 0;
+let minutes = 0;
+let hours = 0;
+let interval;
+
+function updateTime() {
+  seconds++;
+  if (seconds === 60) {
+    minutes++;
+    seconds = 0;
+  }
+  if (minutes === 60) {
+    hours++;
+    minutes = 0;
+  }
+  timer.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+}
+
+startBtn.addEventListener('click', () => {
+  interval = setInterval(updateTime, 1000);
+  startBtn.disabled = true;
+  pauseBtn.disabled = false;
+  resetBtn.disabled = false;
+});
+
+pauseBtn.addEventListener('click', () => {
+  clearInterval(interval);
+  startBtn.disabled = false;
+  pauseBtn.disabled = true;
+});
+
+resetBtn.addEventListener('click', () => {
+  clearInterval(interval);
+  seconds = 0;
+  minutes = 0;
+  hours = 0;
+  timer.textContent = '00:00:00';
+  startBtn.disabled = false;
+  pauseBtn.disabled = true;
+  resetBtn.disabled = true;
+});
+        </script>
+    </div>
+    <h1 style="margin-top: 30px; margin-left: 10px;">Нажмите "старт", перепишите текст и нажмите "пауза"</h1>
+    <p style="width: 90%; margin-left: 5%; margin-top: 20px; font-size: 20px;">Не грибная была осень, совсем не грибная. В холодном сухом лесу грибами даже и не попахивало. Но всё равно меня тянуло в лес – к опушкам, к просторным голубым небесам. И корзину я взял по привычке – прихватить где-то интересный, похожий на человечка или зверушку, корешок, бросить яркую рубиновую гроздь калины.
+        Я переходил с одной тропинки на другую, вслушивался в громкий стук дятла.
+        И вдруг насторожился – откуда-то потянуло внезапной приятной сыростью. Я огляделся.
+        Посреди тропинки пробился маленький крепкий боровичок! Вот ещё один! А вон на обочине увесистый боровик, а дальше подосиновик и моховик, и подберёзовик. Вот удача-то! На минуту я присел отдохнуть и порадоваться потяжелевшей корзине. Вдруг услышал какой–то легкий шум. Оглянулся, а сзади меня зверёк с полосочками на спине – то ли ласка, то ли бурундучок, а рядом и белочка.
+        Я опомнился. Вон сколько тут лесного народа кормится! Я шел и иногда оставлял по дороге то грибок, то кусочек краюшки хлеба. Зверькам пригодятся! (152 слова)</p>
+    <textarea name="1" id="" cols="30" rows="10" style="width: 90%; height: 300px;font-size: 20px; margin-left: 5%; margin-top: 20px;"></textarea>
+</body>

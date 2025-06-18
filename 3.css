@@ -1,0 +1,10 @@
+*{
+    margin: 0;
+}
+.head{
+    height: 100px;
+    width: auto;
+    background-color: rgb(16, 76, 16);
+    padding-left: 20px;
+    padding-top: 20px;
+} 
